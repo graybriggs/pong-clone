@@ -7,7 +7,7 @@
 
 constexpr double PI = 3.14159265;
 
-class Paddle;
+class PaddleBase;
 
 class Ball {
 public:
@@ -17,15 +17,15 @@ public:
   void reset_ball();
   void change_x_direction();
   void change_y_direction();
-  int paddle_hit(const Paddle& paddle);
+  bool paddle_hit(const PaddleBase& paddle);
   bool check_collision(SDL_Rect one, SDL_Rect two);
   void ball_screen_collision();
   int scored();
   int screen_y_collision();
   int screen_x_collision();
-  void update();
+  void update(double delta);
 
-  int calculate_hit_point(const Paddle& paddle);
+  int calculate_hit_point(const PaddleBase& paddle);
   void switch_ball_angle(int value);
 
   double calculate_x_velocity(int angle);

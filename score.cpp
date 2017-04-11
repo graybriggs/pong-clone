@@ -1,6 +1,6 @@
 
 #include "config.hpp"
-#include "paddle.hpp"
+#include "paddle_base.hpp"
 #include "score.hpp"
 
 Score::Score() {

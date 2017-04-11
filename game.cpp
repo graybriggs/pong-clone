@@ -5,7 +5,7 @@
 #include "ball.hpp"
 #include "config.hpp"
 #include "game.hpp"
-#include "paddle.hpp"
+#include "paddle_players.hpp"
 #include "score.hpp"
 
 
@@ -41,8 +41,9 @@ void Game::shutdown() {
 
 void Game::init_assets() {
   
-  paddle1.reset(new Paddle(20));
-  paddle2.reset(new Paddle(Config::SCREEN_WIDTH - 30));
+  paddle1.reset(new PaddlePlayerOne(20));
+  paddle2.reset(new PaddlePlayerTwo(1180));
+
   ball.reset(new Ball);
   score.reset(new Score);
 }
@@ -52,7 +53,6 @@ void Game::run() {
   int pScore;
   int input[2]; 
   
-
   while (!done) {
     timer = SDL_GetTicks();
 
@@ -77,13 +77,17 @@ void Game::run() {
     }
     */
 
-    ball->update();
-    paddle1->update();
+    ball->update(1);
+
+    paddle1->update(1);
+    paddle2->update(1);
 
     render_game_area();
     ball->render();
+
     paddle1->render();
     paddle2->render();
+
     score->render();
     
     SDL_Flip(SDL_GetVideoSurface());

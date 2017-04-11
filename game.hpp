@@ -4,10 +4,13 @@
 
 #include <SDL/SDL.h>
 
-#include "paddle.hpp"
+#include <memory>
+#include <vector>
 
 class Ball;
-class Paddle;
+class PaddleBase;
+class PaddlePlayerOne;
+class PaddlePlayerTwo;
 class Score;
 
 class Game {
@@ -34,8 +37,8 @@ private:
 
   SDL_Event event;
 
-  std::unique_ptr<Paddle> paddle1;
-  std::unique_ptr<Paddle> paddle2;
+  std::unique_ptr<PaddleBase> paddle1;
+  std::unique_ptr<PaddleBase> paddle2;
   std::unique_ptr<Ball> ball;
   std::unique_ptr<Score> score;
 

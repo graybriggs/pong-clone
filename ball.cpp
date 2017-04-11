@@ -5,21 +5,19 @@
 
 #include "ball.hpp"
 #include "config.hpp"
-#include "paddle.hpp"
+#include "paddle_base.hpp"
 
 Ball::Ball() {
 
 	box.x = Config::SCREEN_WIDTH / 2 - 5;
-  box.y = Config::SCREEN_HEIGHT / 2 - 5;
+	box.y = Config::SCREEN_HEIGHT / 2 - 5;
 	box.w = 8;
 	box.h = 8;
 
-  angle = initial_firing_angle();
-  xVel = calculate_x_velocity(angle);
-  yVel = calculate_y_velocity(angle);
+	angle = initial_firing_angle();
+	xVel = calculate_x_velocity(angle);
+	yVel = calculate_y_velocity(angle);
 
-
-  update();
 
 }
 
@@ -42,7 +40,7 @@ void Ball::reset_ball()
 	angle = initial_firing_angle();  // calculate new angle
 	xVel = calculate_x_velocity(angle);	// reset the x and y velocities corresponding to the new angle; cos, sin
 	yVel = calculate_y_velocity(angle);
-	update();
+
 } 
 
 
@@ -57,12 +55,12 @@ void Ball::change_y_direction()
 	yVel *= -1.0;
 }
 
-int Ball::paddle_hit(const Paddle& paddle)
+bool Ball::paddle_hit(const PaddleBase& paddle)
 {
-	if (!check_collision(box, paddle.get_box())) {
-		return 1;
-	}
-	return 0;
+	if (!check_collision(box, paddle.get_box()))
+		return true;
+
+	return false;
 }
 
 
@@ -137,13 +135,13 @@ int Ball::screen_x_collision()
 	return hit;
 }
 
-void Ball::update()
+void Ball::update(double delta)
 {
 	box.x += xVel * 6.0;  // magic speed number 6.0
 	box.y += yVel * 6.0;
 }
 
-int Ball::calculate_hit_point(const Paddle& paddle)
+int Ball::calculate_hit_point(const PaddleBase& paddle)
 {
 	int hitPoint = (int)box.y - paddle.get_box().y;
 	int r = 0;
